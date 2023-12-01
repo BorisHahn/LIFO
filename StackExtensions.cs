@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace LIFO
 {
-    static class StackExtensions
+    public static class StackExtensions
     {
         public static void Merge(this Stack stack, Stack newStack)
         {
-            for (var i = newStack.val.Length - 1; i >= 0; i--)
+            var stackSize = newStack.Size;
+
+            for (var i = 0; i < stackSize; i++)
             {
-                stack.list.Add(newStack.val[i]);
+                stack.Add(newStack.Pop());
             }
         }
     }

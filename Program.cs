@@ -1,13 +1,25 @@
-﻿
+﻿using System.Collections;
+
 namespace LIFO
 {
-    internal class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             var stack = new Stack("a", "b", "c");
             stack.Merge(new Stack("1", "2", "3"));
-            var stackConcat = Stack.Concat(new Stack("a", "b", "c"), new Stack("1", "2", "3"), new Stack("А", "Б", "В"));
+
+            var stackConcat1 = Stack.Concat(new Stack("a", "b", "c"), new Stack("1", "2", "3"), new Stack("А", "Б", "В"));
+
+            foreach (var item in stackConcat1)
+            {
+                Console.Write($"{item}, ");
+            }
+
+            foreach (var item in stack)
+            {
+                Console.Write($"{item}, ");
+            }
         }
     }
 }

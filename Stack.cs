@@ -1,37 +1,45 @@
-﻿
+﻿using System.Collections;
+
 namespace LIFO
 {
-    internal class Stack
+    public class Stack : IEnumerable
     {
-        public List<string> list = new();
-        public string[] val;
+        private readonly List<string> _list = new();
+
         public Stack(params string[] val)
         {
-            this.val = val;
 
-            foreach (var item in this.val)
+            foreach (var item in val)
             {
-                list.Add(item);
+                _list.Add(item);
             }
         }
-        public void Pop()
+
+        public string Pop()
         {
-            try
+            string element;
+
+            if (Size > 0)
             {
-                list.Remove(list.Last());
+                element = _list[^1];
+                _list.Remove(_list[^1]);
             }
-            catch
+            else
             {
-                Console.WriteLine("Стек пустой");
+                throw new Exception("Стек пустой");
             }
+
+            return element;
         }
+
         public void Add(string elem)
         {
-            list.Add(elem);
+            _list.Add(elem);
         }
 
-        public int Size => list.Count;
-        public string? Top => list.LastOrDefault();
+        public int Size => _list.Count;
+
+        public string Top => _list.LastOrDefault();
 
         public static Stack Concat(params Stack[] stacks)
         {
@@ -39,12 +47,19 @@ namespace LIFO
 
             foreach (var item in stacks)
             {
-                for (var i = item.val.Length - 1; i >= 0; i--)
+                var stackSize = item.Size;
+
+                for (var i = 0; i < stackSize; i++)
                 {
-                    newStack.Add(item.val[i]);
+                    newStack.Add(item.Pop());
                 }
             }
             return newStack;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return _list.GetEnumerator();
         }
     }
 }
